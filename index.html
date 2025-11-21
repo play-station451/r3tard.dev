@@ -1,144 +1,320 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>R3TARD.DEV</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); 
-            color: #d1d1d1;
-            font-family: 'Roboto', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            line-height: 1.6;
-            overflow: hidden;
-        }
-        .container {
-            background-color: #2c2c2c;
-            padding: 40px; 
-            border-radius: 15px; 
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); 
-            width: 85%; 
-            max-width: 800px; 
-            min-height: 350px; 
-            text-align: center;
-            border: 1px solid #3a3a3a; 
-            transition: transform 0.3s ease, box-shadow 0.3s ease; 
-            position: relative;
-            z-index: 1; 
-        }
-        .container:hover {
-            transform: translateY(-5px); 
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); 
-        }
-        h1 {
-            color: #ffffff;
-            margin-bottom: 20px; 
-            font-weight: 700;
-            font-size: 2.8em; 
-            letter-spacing: 2px; 
-            text-transform: uppercase; 
-        }
-        p {
-            margin-bottom: 0;
-            font-weight: 300;
-            font-size: 1.1em;
-            color: #b0b0b0;
-        }
-        .members-section {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #3a3a3a;
-        }
-        .members-section h2 {
-            color: #ffffff;
-            font-size: 1.8em;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-        .members-list {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-        }
-        .members-list li {
-            background-color: #3a3a3a;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 1.0em;
-            color: #e0e0e0;
-            transition: background-color 0.3s ease;
-        }
-        .members-list li:hover {
-            background-color: #4a4a4a;
-        }
-        .member-role {
-            font-size: 0.8em;
-            color: #909090;
-            margin-left: 10px;
-            font-weight: 300;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R3tard.dev</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+    /* Full page styling */
+    body {
+        margin: 0;
+        overflow: hidden;
+        font-family: 'Roboto', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        line-height: 1.6;
+        color: #d1d1d1;
+        position: relative;
+        background: #000;
+    }
+
+    /* Canvas for Matrix rain */
+    #matrix-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+    }
+
+    /* Container */
+    .container {
+        background-color: #000000c5;
+        padding: 40px; 
+        border-radius: 15px; 
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); 
+        width: 85%; 
+        max-width: 800px; 
+        min-height: 350px; 
+        text-align: center;
+        border: 1px solid #3a3a3a; 
+        transition: transform 0.3s ease, box-shadow 0.3s ease; 
+        position: relative;
+        z-index: 1; 
+    }
+
+    .container:hover {
+        transform: translateY(-5px); 
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); 
+    }
+
+    /* Animated wave text */
+   h1 {
+    font-weight: 700;
+    font-size: 2.8em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, red, rgb(243, 98, 123), red);
+    background-size: 200% 100%; /* allows smooth sliding */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: redPinkWave 3s ease-in-out infinite;
+    }
+
+    @keyframes redPinkWave {
+        0% { background-position: 0% 0%; }
+        50% { background-position: 100% 0%; }
+        100% { background-position: 0% 0%; }
+    }
+
+
+
+
+    p {
+        margin-bottom: 0;
+        font-weight: 300;
+        font-size: 1.1em;
+        color: #b0b0b0;
+    }
+
+    .members-section {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #3a3a3a;
+    }
+
+    .members-section h2 {
+        color: #ffffff;
+        font-size: 1.8em;
+        margin-bottom: 15px;
+        font-weight: 700;
+    }
+
+    .members-list {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .members-list li {
+        background-color: #161616c5;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 1.0em;
+        color: #e0e0e0;
+        transition: background-color 0.3s ease;
+    }
+
+    .members-list li:hover {
+        background-color: #1d1d1dc5;
+    }
+
+    .member-role {
+        font-size: 0.8em;
+        color: #909090;
+        margin-left: 10px;
+        font-weight: 300;
+    }
+
+    /* Tooltip */
+    .tooltip {
+        position: relative;
+        cursor: pointer;
+        display: inline-block;
+        color: #e0e0e0;
+    }
+
+    .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 200px;
+        background-color: #1d1d1dc5;
+        color: #fff;
+        text-align: center;
+        padding: 8px;
+        border-radius: 6px;
+        position: absolute;
+        z-index: 10;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        font-size: 0.9em;
+        pointer-events: none;
+        white-space: normal;
+    }
+
+    .tooltip .tooltip-text::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 6px;
+        border-style: solid;
+        border-color: #444 transparent transparent transparent;
+    }
+
+    .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+        transform: translateX(-50%) translateY(-5px);
+    }
+    /* Normal paragraph text stays the same */
+    p {
+    font-weight: 300;
+    font-size: 1.1em;
+    color: #b0b0b0;
+    }
+
+    /* ALLEGED gradient effect */
+    .alleged {
+        font-weight: 700; /* bold to match h1 emphasis */
+        background: linear-gradient(90deg, red, pink, red);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: redPinkWave 3s ease-in-out infinite;
+        font-family: inherit; /* keep same font as paragraph */
+    }
+
+    @keyframes redPinkWave {
+        0% { background-position: 0% 0%; }
+        50% { background-position: 100% 0%; }
+        100% { background-position: 0% 0%; }
+    }
+
+
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>R3TARD.DEV</h1>
-        <p>Peices of shit wanting attention and professional ALLEGED Larpers</p>
 
-        <div class="members-section">
-            <h2>Members</h2>
-            <ul class="members-list">
-                <li>Playstation451 <span class="member-role">(Founder)</span></li>
-                <li>Amaya <span class="member-role">(Founder)</span></li>
-                <li>Ruffy <span class="member-role">(Mental Support)</span></li>
-            </ul>
-        </div>
+<!-- Matrix background canvas -->
+<canvas id="matrix-bg"></canvas>
+
+<div class="container">
+    <h1>R3tard.dev</h1>
+    <p>
+        Pieces of shit wanting clout and professional 
+        <span class="alleged">ALLEGED</span> larpers
+    </p>
+
+
+    <div class="members-section">
+        <span class="alleged">Members</span>
+        <ul class="members-list">
+            <li>
+                <span class="tooltip">Playstation451
+                    <span class="tooltip-text">
+                        discord: playstation451._.<br>ID: 1395903623313096877
+                    </span>
+                </span>
+                <span class="member-role">(Founder)</span>
+            </li>
+            <li>
+                <span class="tooltip">Amaya
+                    <span class="tooltip-text">
+                        discord: amaya.cfg<br>ID: 1259553077757874266
+                    </span>
+                </span>
+                <span class="member-role">(Founder)</span>
+            </li>
+            <li>
+                <span class="tooltip">Ruffy
+                    <span class="tooltip-text">
+                        discord: ruffy_11<br>ID: 990224440560341032
+                    </span>
+                </span>
+                <span class="member-role">(Moral support)</span>
+            </li>
+        </ul>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const phrases = ["R", "RE", "RET", "RETA", "RETAR", "RETARD", "RETARD.", "RETARD.D", "RETARD.DE", "RETARD.DEV"];
-            let phraseIndex = 0;
-            let charIndex = 0;
-            let isDeleting = false;
-            const typingSpeed = 75;
-            const deletingSpeed = 50;
-            const pauseBeforeDelete = 1000;
-            const pauseBeforeType = 500;
+</div>
 
-            function animateTitle() {
-                const currentPhrase = phrases[phraseIndex];
-                if (!isDeleting) {
-                    document.title = currentPhrase.substring(0, charIndex);
-                    charIndex++;
-                    if (charIndex > currentPhrase.length) {
-                        isDeleting = true;
-                        setTimeout(animateTitle, pauseBeforeDelete);
-                        return;
-                    }
-                } else {
-                    document.title = currentPhrase.substring(0, charIndex);
-                    charIndex--;
-                    if (charIndex < 0) {
-                        isDeleting = false;
-                        phraseIndex = (phraseIndex + 1) % phrases.length;
-                        setTimeout(animateTitle, pauseBeforeType);
-                        return;
-                    }
-                }
-                const currentSpeed = isDeleting ? deletingSpeed : typingSpeed;
-                setTimeout(animateTitle, currentSpeed);
+<script>
+    // Tab title animation
+    const fullTitle = "R3tard.dev";
+    function getTitleSequence(word) {
+        const sequence = [];
+        for (let i = word.length; i >= 1; i--) sequence.push(word.slice(0, i));
+        for (let i = 2; i <= word.length; i++) sequence.push(word.slice(0, i));
+        return sequence;
+    }
+    const titles = getTitleSequence(fullTitle);
+    let index = 0;
+    setInterval(() => {
+        document.title = titles[index];
+        index = (index + 1) % titles.length;
+    }, 300);
+
+    // Matrix rain
+    const canvas = document.getElementById('matrix-bg');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()*&^%";
+    const lettersArray = letters.split("");
+    const fontSize = 16;
+    const columns = Math.floor(width / fontSize);
+    const drops = Array(columns).fill(1);
+
+    function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = "#FFFFFF";
+        ctx.font = fontSize + "px monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = lettersArray[Math.floor(Math.random() * lettersArray.length)];
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > height && Math.random() > 0.975) {
+                drops[i] = 0;
             }
+            drops[i]++;
+        }
+    }
 
-            animateTitle();
+    setInterval(draw, 50);
+
+    window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    });
+</script>
+<script>
+document.querySelectorAll('.tooltip').forEach(tooltip => {
+    tooltip.addEventListener('click', () => {
+        const tooltipText = tooltip.querySelector('.tooltip-text');
+        const originalText = tooltipText.innerHTML;
+
+        // Extract username only (before <br>)
+        const username = originalText.split('<br>')[0].replace('discord: ', '').trim();
+
+        // Copy username to clipboard
+        navigator.clipboard.writeText(username).then(() => {
+            // Show "copied username!" in tooltip
+            tooltipText.innerHTML = 'copied username!';
+
+            // Restore original tooltip text after 1.5s
+            setTimeout(() => {
+                tooltipText.innerHTML = originalText;
+            }, 1500);
+        }).catch(err => {
+            console.error('Failed to copy!', err);
         });
-    </script>
+    });
+});
+</script>
+
 </body>
 </html>
