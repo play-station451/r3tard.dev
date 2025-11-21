@@ -53,16 +53,17 @@
     }
 
     /* Animated wave text */
-   h1 {
-    font-weight: 700;
-    font-size: 2.8em;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    background: linear-gradient(90deg, red, rgb(243, 98, 123), red);
-    background-size: 200% 100%; /* allows smooth sliding */
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: redPinkWave 3s ease-in-out infinite;
+    h1 {
+        font-weight: 700;
+        font-size: 2.8em;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        background: linear-gradient(90deg, red, rgb(243, 98, 123), red);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: redPinkWave 3s ease-in-out infinite;
+        position: relative;
     }
 
     @keyframes redPinkWave {
@@ -71,8 +72,39 @@
         100% { background-position: 0% 0%; }
     }
 
+    /* Glitch Effect */
+    h1::before,
+    h1::after {
+        content: "R3tard.dev";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background: inherit;
+        pointer-events: none;
+    }
 
+    h1::before {
+        animation: glitch1 2s infinite linear alternate-reverse;
+    }
 
+    h1::after {
+        animation: glitch2 1.5s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch1 {
+        0% { clip-path: inset(0 0 90% 0); transform: translate(-2px, -2px); }
+        50% { clip-path: inset(40% 0 40% 0); transform: translate(2px, 2px); }
+        100% { clip-path: inset(80% 0 0 0); transform: translate(-1px, 1px); }
+    }
+
+    @keyframes glitch2 {
+        0% { clip-path: inset(0 0 80% 0); transform: translate(2px, 1px); }
+        50% { clip-path: inset(60% 0 20% 0); transform: translate(-2px, -1px); }
+        100% { clip-path: inset(0 0 100% 0); transform: translate(1px, -2px); }
+    }
 
     p {
         margin-bottom: 0;
@@ -167,30 +199,32 @@
         opacity: 1;
         transform: translateX(-50%) translateY(-5px);
     }
-    /* Normal paragraph text stays the same */
-    p {
-    font-weight: 300;
-    font-size: 1.1em;
-    color: #b0b0b0;
-    }
 
     /* ALLEGED gradient effect */
     .alleged {
-        font-weight: 700; /* bold to match h1 emphasis */
+        font-weight: 700;
         background: linear-gradient(90deg, red, pink, red);
         background-size: 200% 100%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         animation: redPinkWave 3s ease-in-out infinite;
-        font-family: inherit; /* keep same font as paragraph */
+        font-family: inherit;
     }
 
-    @keyframes redPinkWave {
-        0% { background-position: 0% 0%; }
-        50% { background-position: 100% 0%; }
-        100% { background-position: 0% 0%; }
+    /* Footer */
+    .site-footer {
+        position: fixed;
+        bottom: 10px;
+        width: 100%;
+        text-align: center;
+        color: #555;
+        font-size: 0.9em;
+        z-index: 2;
+        user-select: none;
+        font-weight: 300;
+        letter-spacing: 1px;
+        text-shadow: 0 0 5px #000;
     }
-
 
 </style>
 </head>
@@ -205,7 +239,6 @@
         Pieces of shit wanting clout and professional 
         <span class="alleged">ALLEGED</span> larpers
     </p>
-
 
     <div class="members-section">
         <span class="alleged">Members</span>
@@ -245,6 +278,11 @@
         </ul>
     </div>
 </div>
+
+<!-- Footer -->
+<footer class="site-footer">
+    © 2025 R3tard.dev — all degeneracy reserved
+</footer>
 
 <script>
     // Tab title animation
@@ -299,21 +337,17 @@
         height = canvas.height = window.innerHeight;
     });
 </script>
+
 <script>
 document.querySelectorAll('.tooltip').forEach(tooltip => {
     tooltip.addEventListener('click', () => {
         const tooltipText = tooltip.querySelector('.tooltip-text');
         const originalText = tooltipText.innerHTML;
 
-        // Extract username only (before <br>)
         const username = originalText.split('<br>')[0].replace('discord: ', '').trim();
 
-        // Copy username to clipboard
         navigator.clipboard.writeText(username).then(() => {
-            // Show "copied username!" in tooltip
             tooltipText.innerHTML = 'copied username!';
-
-            // Restore original tooltip text after 1.5s
             setTimeout(() => {
                 tooltipText.innerHTML = originalText;
             }, 1500);
