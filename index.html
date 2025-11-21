@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R3TARD.DEV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); 
+            color: #d1d1d1;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            line-height: 1.6;
+            overflow: hidden;
+        }
+        .container {
+            background-color: #2c2c2c;
+            padding: 40px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); 
+            width: 85%; 
+            max-width: 800px; 
+            min-height: 350px; 
+            text-align: center;
+            border: 1px solid #3a3a3a; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+            position: relative;
+            z-index: 1; 
+        }
+        .container:hover {
+            transform: translateY(-5px); 
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); 
+        }
+        h1 {
+            color: #ffffff;
+            margin-bottom: 20px; 
+            font-weight: 700;
+            font-size: 2.8em; 
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+        }
+        p {
+            margin-bottom: 0;
+            font-weight: 300;
+            font-size: 1.1em;
+            color: #b0b0b0;
+        }
+        .members-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #3a3a3a;
+        }
+        .members-section h2 {
+            color: #ffffff;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        .members-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        .members-list li {
+            background-color: #3a3a3a;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 1.0em;
+            color: #e0e0e0;
+            transition: background-color 0.3s ease;
+        }
+        .members-list li:hover {
+            background-color: #4a4a4a;
+        }
+        .member-role {
+            font-size: 0.8em;
+            color: #909090;
+            margin-left: 10px;
+            font-weight: 300;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>R3TARD.DEV</h1>
+        <p>Peices of shit wanting attention and professional ALLEGED Larpers</p>
+
+        <div class="members-section">
+            <h2>Members</h2>
+            <ul class="members-list">
+                <li>Playstation451 <span class="member-role">(Founder)</span></li>
+                <li>Amaya <span class="member-role">(Founder)</span></li>
+                <li>Ruffy <span class="member-role">(Mental Support)</span></li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const phrases = ["R", "RE", "RET", "RETA", "RETAR", "RETARD", "RETARD.", "RETARD.D", "RETARD.DE", "RETARD.DEV"];
+            let phraseIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            const typingSpeed = 75;
+            const deletingSpeed = 50;
+            const pauseBeforeDelete = 1000;
+            const pauseBeforeType = 500;
+
+            function animateTitle() {
+                const currentPhrase = phrases[phraseIndex];
+                if (!isDeleting) {
+                    document.title = currentPhrase.substring(0, charIndex);
+                    charIndex++;
+                    if (charIndex > currentPhrase.length) {
+                        isDeleting = true;
+                        setTimeout(animateTitle, pauseBeforeDelete);
+                        return;
+                    }
+                } else {
+                    document.title = currentPhrase.substring(0, charIndex);
+                    charIndex--;
+                    if (charIndex < 0) {
+                        isDeleting = false;
+                        phraseIndex = (phraseIndex + 1) % phrases.length;
+                        setTimeout(animateTitle, pauseBeforeType);
+                        return;
+                    }
+                }
+                const currentSpeed = isDeleting ? deletingSpeed : typingSpeed;
+                setTimeout(animateTitle, currentSpeed);
+            }
+
+            animateTitle();
+        });
+    </script>
+</body>
+</html>
