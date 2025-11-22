@@ -7,319 +7,157 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 
 <style>
-    /* Full page styling */
-    body {
-        margin: 0;
-        overflow: hidden;
-        font-family: 'Roboto', sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        line-height: 1.6;
-        color: #d1d1d1;
-        position: relative;
-        background: #000;
-    }
+/* --- Global --- */
+body, html {
+    margin:0;
+    padding:0;
+    font-family:'Roboto', sans-serif;
+    background:#000;
+    color:#d1d1d1;
+    overflow:hidden;
+    height:100%;
+}
+#main-content {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease;
+    
+    /* new: make it flex for centering */
+    position: fixed;       /* cover whole screen */
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 
-    /* Boot Screen */
-    #boot-screen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #000;
-        color: #ffffff;
-        font-family: "Courier New", monospace;
-        padding: 40px;
-        box-sizing: border-box;
-        z-index: 9999;
-        display: flex;
-        align-items: flex-start;
-        justify-content: flex-start;
-        opacity: 1;
-        transition: opacity 1s ease;
-        white-space: pre-line;
-    }
 
-    #boot-terminal {
-        font-size: 16px;
-        line-height: 1.4em;
-    }
+/* --- Boot Screen --- */
+#boot-screen {
+    position:fixed;
+    top:0; left:0; width:100%; height:100%;
+    background:#000;
+    color:#fff;
+    font-family:"Courier New", monospace;
+    padding:40px;
+    box-sizing:border-box;
+    z-index:9999;
+    display:flex;
+    align-items:flex-start;
+    justify-content:flex-start;
+    white-space:pre-line;
+}
+#boot-terminal { font-size:16px; line-height:1.4em; }
 
-    /* Matrix background */
-    #matrix-bg {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-    }
+/* --- Enter Screen --- */
+#enter-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* semi-transparent black */
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Courier New", monospace;
+    font-size: 2em;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease;
+    z-index: 9998;
+    text-align: center;
+}
 
-    /* Container */
-    .container {
-        background-color: #000000c5;
-        padding: 40px; 
-        border-radius: 15px; 
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); 
-        width: 85%; 
-        max-width: 800px; 
-        min-height: 350px; 
-        text-align: center;
-        border: 1px solid #3a3a3a; 
-        transition: transform 0.3s ease, box-shadow 0.3s ease; 
-        position: relative;
-        z-index: 1; 
-    }
+#enter-text {
+    cursor: default;       /* no pointer */
+    background: linear-gradient(90deg, red, pink, red);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: redPinkWave 3s ease-in-out infinite;
+    font-weight: 700;
+    font-family: inherit;
+    font-size: 2em;
+    margin: 0;
+    padding: 0;
+}
 
-    .container:hover {
-        transform: translateY(-5px); 
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); 
-    }
+/* --- Matrix Canvas --- */
+#matrix-bg {
+    position:fixed;
+    top:0; left:0; width:100%; height:100%;
+    z-index:0;
+}
 
-    /* Animated wave text */
-    h1 {
-        font-weight: 700;
-        font-size: 2.8em;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        background: linear-gradient(90deg, red, rgb(243, 98, 123), red);
-        background-size: 200% 100%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: redPinkWave 3s ease-in-out infinite;
-        position: relative;
-    }
+/* --- Container --- */
+.container {
+    background-color: #000000c5;
+    padding: 40px; 
+    border-radius: 15px; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5); 
+    width: 85%; 
+    max-width:800px;
+    min-height:350px;
+    text-align:center;
+    border:1px solid #3a3a3a;
+    position:relative;
+    z-index:2;
+}
+h1 { font-size:2.8em; font-weight:700; text-transform:uppercase;
+     background:linear-gradient(90deg, red, pink, red);
+     background-size:200% 100%; -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+     animation:redPinkWave 3s ease-in-out infinite; position:relative; }
+@keyframes redPinkWave {0%{background-position:0% 0%}50%{background-position:100% 0%}100%{background-position:0% 0%}}
+.members-section { margin-top:30px; padding-top:20px; border-top:1px solid #3a3a3a;}
+.members-list { list-style:none; padding:0; display:flex; flex-wrap:wrap; justify-content:center; gap:15px;}
+.members-list li { background-color:#161616c5; padding:10px 20px; border-radius:8px; color:#e0e0e0;}
+.members-list li:hover { background-color:#1d1d1dc5; }
+.member-role { font-size:0.8em; color:#909090; margin-left:10px; font-weight:300; }
+.tooltip { position:relative; cursor:pointer; display:inline-block; color:#e0e0e0; }
+.tooltip .tooltip-text { visibility:hidden; width:200px; background:#1d1d1dc5; color:#fff; text-align:center; padding:8px; border-radius:6px; position:absolute; z-index:10; bottom:125%; left:50%; transform:translateX(-50%); opacity:0; transition:opacity 0.3s ease, transform 0.3s ease; font-size:0.9em; pointer-events:none; white-space:normal;}
+.tooltip:hover .tooltip-text { visibility:visible; opacity:1; transform:translateX(-50%) translateY(-5px);}
+.alleged { font-weight:700; background:linear-gradient(90deg, red, pink, red); background-size:200% 100%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:redPinkWave 3s ease-in-out infinite;}
 
-    @keyframes redPinkWave {
-        0% { background-position: 0% 0%; }
-        50% { background-position: 100% 0%; }
-        100% { background-position: 0% 0%; }
-    }
-
-    /* Glitch Effect */
-    h1::before,
-    h1::after {
-        content: "R3tard.dev";
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background: inherit;
-        pointer-events: none;
-    }
-
-    h1::before {
-        animation: glitch1 2s infinite linear alternate-reverse;
-    }
-
-    h1::after {
-        animation: glitch2 1.5s infinite linear alternate-reverse;
-    }
-
-    @keyframes glitch1 {
-        0% { clip-path: inset(0 0 90% 0); transform: translate(-2px, -2px); }
-        50% { clip-path: inset(40% 0 40% 0); transform: translate(2px, 2px); }
-        100% { clip-path: inset(80% 0 0 0); transform: translate(-1px, 1px); }
-    }
-
-    @keyframes glitch2 {
-        0% { clip-path: inset(0 0 80% 0); transform: translate(2px, 1px); }
-        50% { clip-path: inset(60% 0 20% 0); transform: translate(-2px, -1px); }
-        100% { clip-path: inset(0 0 100% 0); transform: translate(1px, -2px); }
-    }
-
-    p {
-        margin-bottom: 0;
-        font-weight: 300;
-        font-size: 1.1em;
-        color: #b0b0b0;
-    }
-
-    .members-section {
-        margin-top: 30px;
-        padding-top: 20px;
-        border-top: 1px solid #3a3a3a;
-    }
-
-    .members-section h2 {
-        color: #ffffff;
-        font-size: 1.8em;
-        margin-bottom: 15px;
-        font-weight: 700;
-    }
-
-    .members-list {
-        list-style: none;
-        padding: 0;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
-    }
-
-    .members-list li {
-        background-color: #161616c5;
-        padding: 10px 20px;
-        border-radius: 8px;
-        font-size: 1.0em;
-        color: #e0e0e0;
-        transition: background-color 0.3s ease;
-    }
-
-    .members-list li:hover {
-        background-color: #1d1d1dc5;
-    }
-
-    .member-role {
-        font-size: 0.8em;
-        color: #909090;
-        margin-left: 10px;
-        font-weight: 300;
-    }
-
-    .tooltip {
-        position: relative;
-        cursor: pointer;
-        display: inline-block;
-        color: #e0e0e0;
-    }
-
-    .tooltip .tooltip-text {
-        visibility: hidden;
-        width: 200px;
-        background-color: #1d1d1dc5;
-        color: #fff;
-        text-align: center;
-        padding: 8px;
-        border-radius: 6px;
-        position: absolute;
-        z-index: 10;
-        bottom: 125%;
-        left: 50%;
-        transform: translateX(-50%);
-        opacity: 0;
-        transition: opacity 0.3s ease, transform 0.3s ease;
-        font-size: 0.9em;
-        pointer-events: none;
-        white-space: normal;
-    }
-
-    .tooltip .tooltip-text::after {
-        content: '';
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        border-width: 6px;
-        border-style: solid;
-        border-color: #444 transparent transparent transparent;
-    }
-
-    .tooltip:hover .tooltip-text {
-        visibility: visible;
-        opacity: 1;
-        transform: translateX(-50%) translateY(-5px);
-    }
-
-    .alleged {
-        font-weight: 700;
-        background: linear-gradient(90deg, red, pink, red);
-        background-size: 200% 100%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: redPinkWave 3s ease-in-out infinite;
-        font-family: inherit;
-    }
-
-    .site-footer {
-        position: fixed;
-        bottom: 10px;
-        width: 100%;
-        text-align: center;
-        color: #555;
-        font-size: 0.9em;
-        z-index: 2;
-        user-select: none;
-        font-weight: 300;
-        letter-spacing: 1px;
-        text-shadow: 0 0 5px #000;
-    }
+/* --- Footer --- */
+.site-footer { position:fixed; bottom:10px; width:100%; text-align:center; color:#555; font-size:0.9em; z-index:2; user-select:none; font-weight:300; letter-spacing:1px; text-shadow:0 0 5px #000; }
 
 </style>
 </head>
 <body>
 
-<!-- Boot Intro Screen -->
-<div id="boot-screen">
-    <div id="boot-terminal"></div>
-</div>
+<audio id="boot-audio" src="./music.mp3" autoplay muted></audio>
 
-<!-- Matrix background canvas -->
-<canvas id="matrix-bg"></canvas>
+<!-- Boot Screen -->
+<div id="boot-screen"><div id="boot-terminal"></div></div>
 
-<div class="container">
-    <h1>R3tard.dev</h1>
-    <p>
-        Pieces of shit wanting clout and professional 
-        <span class="alleged">ALLEGED</span> larpers
-    </p>
+<!-- Enter Screen -->
+<div id="enter-screen"><div id="enter-text">Click to Enter</div></div>
 
-    <div class="members-section">
-        <span class="alleged">Members</span>
-        <ul class="members-list">
-
-            <!-- Removed personal, sensitive identifiers for safety -->
-
-            <li>
-                <span class="tooltip">Playstation451
-                    <span class="tooltip-text">
-                        username hidden for safety
-                    </span>
-                </span>
-                <span class="member-role">(Founder)</span>
-            </li>
-
-            <li>
-                <span class="tooltip">Amaya
-                    <span class="tooltip-text">
-                        username hidden for safety
-                    </span>
-                </span>
-                <span class="member-role">(Founder)</span>
-            </li>
-            
-            <li>
-                <span class="tooltip">Ruffy
-                    <span class="tooltip-text">
-                        username hidden for safety
-                    </span>
-                </span>
-                <span class="member-role">(Moral support)</span>
-            </li>
-
-            <li>
-                <span class="tooltip">IntrestingFrog
-                    <span class="tooltip-text">
-                        username hidden for safety
-                    </span>
-                </span>
-                <span class="member-role">(Moral support)</span>
-            </li>
-        </ul>
+<!-- Main Content -->
+<div id="main-content">
+    <canvas id="matrix-bg"></canvas>
+    <div class="container">
+        <h1>R3tard.dev</h1>
+        <p>Pieces of shit wanting clout and professional <span class="alleged">ALLEGED</span> larpers</p>
+        <div class="members-section">
+            <span class="alleged">Members</span>
+            <ul class="members-list">
+                <li><span class="tooltip">Playstation451<span class="tooltip-text">username hidden</span></span> <span class="member-role">(Founder)</span></li>
+                <li><span class="tooltip">Amaya<span class="tooltip-text">username hidden</span></span> <span class="member-role">(Founder)</span></li>
+                <li><span class="tooltip">Ruffy<span class="tooltip-text">username hidden</span></span> <span class="member-role">(Moral support)</span></li>
+                <li><span class="tooltip">IntrestingFrog<span class="tooltip-text">username hidden</span></span> <span class="member-role">(Moral support)</span></li>
+            </ul>
+        </div>
     </div>
+    <footer class="site-footer">© 2025 R3tard.dev — No skids allowed</footer>
 </div>
 
-<footer class="site-footer">
-    © 2025 R3tard.dev — No skids allowed
-</footer>
-
-<!-- Boot Sequence Script -->
 <script>
+// Boot lines
 const bootLines = [
     "> initializing system...",
     "> looking for skids...",
@@ -327,88 +165,97 @@ const bootLines = [
     "> none found...",
     "> setting up site...",
     "> adding secret features...",
-    "> ready."
+    "> Now playing suicidal love - disoc8... :^)"
 ];
-
-async function typeBootLine(text, container) {
-    for (let i = 0; i <= text.length; i++) {
-        container.innerHTML = text.slice(0, i);
-        await new Promise(r => setTimeout(r, 25));
+async function typeBootLine(text, container){
+    for(let i=0;i<=text.length;i++){
+        container.innerHTML=text.slice(0,i);
+        await new Promise(r=>setTimeout(r,25));
     }
-    container.innerHTML += "\n";
+    container.innerHTML+="\n";
 }
-
-async function runBoot() {
-    const terminal = document.getElementById("boot-terminal");
-
-    for (const line of bootLines) {
-        await typeBootLine(line, terminal);
-        await new Promise(r => setTimeout(r, 300));
+async function runBoot(){
+    const terminal=document.getElementById("boot-terminal");
+    const boot=document.getElementById("boot-screen");
+    const enterScreen=document.getElementById("enter-screen");
+    for(let i=0;i<bootLines.length;i++){
+        await typeBootLine(bootLines[i],terminal);
+        if(i<bootLines.length-1) await new Promise(r=>setTimeout(r,300));
     }
-
-    const boot = document.getElementById("boot-screen");
-    boot.style.opacity = 0;
-
-    setTimeout(() => boot.remove(), 1200);
+    boot.style.opacity=0;
+    setTimeout(()=>{
+        boot.remove();
+        enterScreen.style.opacity=1;
+        enterScreen.style.pointerEvents="all";
+    },1000);
 }
+window.addEventListener("load",()=>{setTimeout(runBoot,300);});
 
-window.addEventListener("load", () => {
-    setTimeout(runBoot, 300);
+// Click to enter
+document.addEventListener("click", function enterSite() {
+    const enterScreen = document.getElementById("enter-screen");
+    const audio = document.getElementById("boot-audio");
+    const mainContent = document.getElementById("main-content");
+
+    // Play audio
+    audio.muted = false;
+    audio.volume = 1;
+    audio.play().catch(() => {});
+
+    // Fade out enter screen
+    enterScreen.style.opacity = 0;
+    enterScreen.style.pointerEvents = "none";
+    setTimeout(() => enterScreen.remove(), 1000);
+
+    // Fade in main content
+    mainContent.style.opacity = 1;
+    mainContent.style.pointerEvents = "all";
+
+    // Remove listener so this only happens once
+    document.removeEventListener("click", enterSite);
+});
+
+
+// Tab title animation
+const fullTitle="R3tard.dev";
+function getTitleSequence(word){
+    const seq=[];
+    for(let i=word.length;i>=1;i--) seq.push(word.slice(0,i));
+    for(let i=2;i<=word.length;i++) seq.push(word.slice(0,i));
+    return seq;
+}
+const titles=getTitleSequence(fullTitle);
+let index=0;
+setInterval(()=>{document.title=titles[index]; index=(index+1)%titles.length;},300);
+
+// Matrix rain
+const canvas=document.getElementById('matrix-bg');
+const ctx=canvas.getContext('2d');
+let width=canvas.width=window.innerWidth;
+let height=canvas.height=window.innerHeight;
+const letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()*&^%";
+const lettersArray=letters.split("");
+const fontSize=16;
+const columns=Math.floor(width/fontSize);
+const drops=Array(columns).fill(1);
+function draw(){
+    ctx.fillStyle="rgba(0,0,0,0.05)";
+    ctx.fillRect(0,0,width,height);
+    ctx.fillStyle="#FFFFFF";
+    ctx.font=fontSize+"px monospace";
+    for(let i=0;i<drops.length;i++){
+        const text=lettersArray[Math.floor(Math.random()*lettersArray.length)];
+        ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+        if(drops[i]*fontSize>height && Math.random()>0.975) drops[i]=0;
+        drops[i]++;
+    }
+}
+setInterval(draw,50);
+window.addEventListener('resize',()=>{
+    width=canvas.width=window.innerWidth;
+    height=canvas.height=window.innerHeight;
 });
 </script>
 
-<script>
-    // Tab title animation
-    const fullTitle = "R3tard.dev";
-    function getTitleSequence(word) {
-        const sequence = [];
-        for (let i = word.length; i >= 1; i--) sequence.push(word.slice(0, i));
-        for (let i = 2; i <= word.length; i++) sequence.push(word.slice(0, i));
-        return sequence;
-    }
-    const titles = getTitleSequence(fullTitle);
-    let index = 0;
-    setInterval(() => {
-        document.title = titles[index];
-        index = (index + 1) % titles.length;
-    }, 300);
-
-    // Matrix rain
-    const canvas = document.getElementById('matrix-bg');
-    const ctx = canvas.getContext('2d');
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
-
-    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()*&^%";
-    const lettersArray = letters.split("");
-    const fontSize = 16;
-    const columns = Math.floor(width / fontSize);
-    const drops = Array(columns).fill(1);
-
-    function draw() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-        ctx.fillRect(0, 0, width, height);
-
-        ctx.fillStyle = "#FFFFFF";
-        ctx.font = fontSize + "px monospace";
-
-        for (let i = 0; i < drops.length; i++) {
-            const text = lettersArray[Math.floor(Math.random() * lettersArray.length)];
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-            if (drops[i] * fontSize > height && Math.random() > 0.975) {
-                drops[i] = 0;
-            }
-            drops[i]++;
-        }
-    }
-
-    setInterval(draw, 50);
-
-    window.addEventListener('resize', () => {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-    });
-</script>
 </body>
 </html>
